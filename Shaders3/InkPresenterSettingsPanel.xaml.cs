@@ -42,14 +42,19 @@ namespace Shaders3
             var colormodel = ((Button)sender).DataContext as ColorButtonModel;
             if (colormodel != null)
             {
-                DrawingAttributes attributes = new DrawingAttributes();
-                attributes.Color = colormodel.ButtonColor;
-                _Canvas.DefaultDrawingAttributes = attributes;
+                _Canvas.DefaultDrawingAttributes.Color = colormodel.ButtonColor;
             }
-            
-           
-
         }
+
+        private void SizeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (_Canvas != null)
+            {
+                _Canvas.DefaultDrawingAttributes.Width = e.NewValue;
+                _Canvas.DefaultDrawingAttributes.Height = e.NewValue;
+            }
+        }
+
         public class ColorButtonModel
         {
             public Brush ButtonColorBrush

@@ -7,7 +7,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ListView x:Name="ColorButtonsListView">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+        <ListView x:Name="ColorButtonsListView" Grid.Row="0">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal"/>
@@ -20,5 +24,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Slider Grid.Row="1" Value="5" Maximum="50" ValueChanged="SizeSlider_ValueChanged" x:Name="SizeSlider"></Slider>
     </Grid>
 </UserControl>

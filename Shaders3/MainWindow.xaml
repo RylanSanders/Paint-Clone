@@ -33,10 +33,12 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Button Content="Test1" Grid.Column="0"></Button>
+                <DockPanel x:Name="InkPresenterSettingsContainer">
+                    
+                </DockPanel>
                 <Button Content="Test2" Grid.Column="1"></Button>
             </Grid>
         </Grid>
-        <local:ViewPanel Grid.Row="1"/>
+        <local:ViewPanel x:Name="MainViewPanel" Grid.Row="1"/>
     </Grid>
 </Window>

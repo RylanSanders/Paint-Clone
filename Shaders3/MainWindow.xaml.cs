@@ -22,6 +22,8 @@ namespace Shaders3
         public MainWindow()
         {
             InitializeComponent();
+            InkPresenterSettingsPanel settings = new InkPresenterSettingsPanel(MainViewPanel.DrawingInkCanvas);
+            InkPresenterSettingsContainer.Children.Add(settings);
         }
     }
 }

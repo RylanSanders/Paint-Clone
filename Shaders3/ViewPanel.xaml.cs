@@ -35,6 +35,7 @@ namespace Shaders3
             InitializeComponent();
             BackgroundImage.Source = new BitmapImage(new Uri(ImagePath));
             KeyDown += Save;
+
         }
 
         void SaveToBmp(FrameworkElement visual, string fileName)
@@ -60,7 +61,7 @@ namespace Shaders3
             // Maybe this ? very slow though https://stackoverflow.com/questions/26082681/write-transparency-to-bitmap-using-unsafe-with-the-original-colors-preserved
             //Would also need to figure out how to apply shaders to all the image or only parts of it
             bitmap.Render(visual);
-            bitmap.Render(InkCanvas);
+            bitmap.Render(DrawingInkCanvas);
             BitmapFrame frame = BitmapFrame.Create(bitmap);
             encoder.Frames.Add(frame);
 

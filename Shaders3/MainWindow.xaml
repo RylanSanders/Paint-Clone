@@ -5,15 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Shaders3"
         mc:Ignorable="d"
+        xmlns:ribbon="clr-namespace:System.Windows.Controls.Ribbon;assembly=System.Windows.Controls.Ribbon"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Canvas x:Name="ParentCanvas">
-            <Image x:Name="BackgroundImage">
-                <Image.Source>
-                    <BitmapImage UriSource="C:\test\picture.jpg" />
-                </Image.Source>
-            </Image>
-            <InkCanvas x:Name="InkCanvas" Background="Transparent"/>
-         </Canvas>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="ToobarGrid" Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <ToolBarTray Grid.Row="0">
+                <ToolBar>
+                    <Menu>
+                        <MenuItem Header="File">
+                            <MenuItem Header="Open"/>
+                            <MenuItem Header="Save"/>
+                            <MenuItem Header="Save As"/>
+                        </MenuItem>
+                    </Menu>
+                </ToolBar>
+            </ToolBarTray>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Content="Test1" Grid.Column="0"></Button>
+                <Button Content="Test2" Grid.Column="1"></Button>
+            </Grid>
+        </Grid>
+        <local:ViewPanel Grid.Row="1"/>
     </Grid>
 </Window>

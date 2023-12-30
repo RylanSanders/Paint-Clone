@@ -22,9 +22,9 @@ namespace Shaders3
     /// </summary>
     public partial class InkPresenterSettingsPanel : UserControl
     {
-        public InkCanvas _Canvas;
+        public TransparencyInkCanvas _Canvas;
         public ObservableCollection<ColorButtonModel> _ColorButtons;
-        public InkPresenterSettingsPanel(InkCanvas canvas)
+        public InkPresenterSettingsPanel(TransparencyInkCanvas canvas)
         {
             _ColorButtons = new ObservableCollection<ColorButtonModel>();
             InitializeComponent();
@@ -34,6 +34,7 @@ namespace Shaders3
             _ColorButtons.Add(new ColorButtonModel(Brushes.Gray, Colors.Gray));
             _ColorButtons.Add(new ColorButtonModel(Brushes.Gold, Colors.Gold));
             _ColorButtons.Add(new ColorButtonModel(Brushes.White, Colors.White));
+            _ColorButtons.Add(new ColorButtonModel(Brushes.Transparent, Colors.Transparent));
             ColorButtonsListView.ItemsSource = _ColorButtons;
         }
         
@@ -42,7 +43,8 @@ namespace Shaders3
             var colormodel = ((Button)sender).DataContext as ColorButtonModel;
             if (colormodel != null)
             {
-                _Canvas.DefaultDrawingAttributes.Color = colormodel.ButtonColor;
+                //_Canvas.DefaultDrawingAttributes.Color = colormodel.ButtonColor;
+                _Canvas.ChangeBrushColor(colormodel.ButtonColor);
             }
         }
 

@@ -5,14 +5,16 @@ float4 color2 : register(c2);
 
 float4 main(float2 uv:TEXCOORD) : COLOR
 {
-    if (tex2D(input, uv).a == 0)
+    float4 currentColor = tex2D(input, uv);
+    if (currentColor.a == 0)
     {
-        return tex2D(input, uv);
+        return currentColor;
     }
-    float xPos = fmod(trunc(uv.x * 100 / pixDiv), 2);
-    float yPos = fmod(trunc(uv.y * 100 / pixDiv), 2);
-    float total = trunc(fmod(xPos + yPos, 2));
-    if (total == 0)
+    float xPos = fmod(trunc(uv.x / pixDiv), 2);
+    float yPos = fmod(trunc(uv.y / pixDiv), 2);
+    float total = xPos + yPos;
+    //Adding xPos and yPos gets us either 0,1, or 2 
+    if (total == 0 || total==2)
     {
         return color1;
     }

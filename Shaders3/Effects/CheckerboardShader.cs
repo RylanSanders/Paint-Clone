@@ -43,7 +43,7 @@ namespace ProjectDesigner.ShaderEffects
         }
 
         public static readonly DependencyProperty PixDivProperty =
-        DependencyProperty.Register("PixDiv", typeof(float), typeof(CheckerboardShader), new PropertyMetadata(10f, PixelShaderConstantCallback(0)));
+        DependencyProperty.Register("PixDiv", typeof(float), typeof(CheckerboardShader), new PropertyMetadata(0.1f, PixelShaderConstantCallback(0)));
 
 
         public Color Color1

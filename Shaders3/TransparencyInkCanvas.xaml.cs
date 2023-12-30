@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectDesigner.ShaderEffects;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
@@ -12,6 +13,7 @@ using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Input.StylusPlugIns;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -25,41 +27,18 @@ namespace Shaders3
     public partial class TransparencyInkCanvas : InkCanvas
     {
 
-        TransparencyDynamicRenderer customRenderer = new TransparencyDynamicRenderer();
 
         public TransparencyInkCanvas() : base()
         {
             // Use the custom dynamic renderer on the
             // custom InkCanvas.
-            this.DynamicRenderer = customRenderer;
-        }
-        public void ChangeBrushColor(Color newColor)
-        {
-            customRenderer.SetBrush(new SolidColorBrush(newColor));
+            //this.DynamicRenderer = customRenderer;
+            this.Effect = new CheckerboardShader();
         }
 
-        protected override void OnStrokeCollected(InkCanvasStrokeCollectedEventArgs e)
-        {
-            // Remove the original stroke and add a custom stroke.
-            //if (e.Stroke.DrawingAttributes.Color == Colors.Transparent)
-            //{
-                this.Strokes.Remove(e.Stroke);
-                CustomStroke customStroke = new CustomStroke(e.Stroke.StylusPoints);
-                this.Strokes.Add(customStroke);
-
-                // Pass the custom stroke to base class' OnStrokeCollected method.
-                InkCanvasStrokeCollectedEventArgs args =
-                    new InkCanvasStrokeCollectedEventArgs(customStroke);
-                base.OnStrokeCollected(args);
-            //}
-            //else
-            //{
-            //    base.OnStrokeCollected(e);
-            //}
-            
-            
-        }
     }
+
+    //NOTE: NOTHING BELOW THIS LINE IS USED, LEAVING IT HERE FOR REFERENCE FOR LATER
 
     //The Dynamic Renderer is used to render the ink as it is being drawn
     public class TransparencyDynamicRenderer : DynamicRenderer
@@ -73,6 +52,8 @@ namespace Shaders3
         static private Pen pen = null;
 
         private Point prevPoint;
+
+        private CheckerboardShader transparentEffect = new CheckerboardShader();
 
         protected override void OnStylusDown(RawStylusInput rawStylusInput)
         {
@@ -112,6 +93,8 @@ namespace Shaders3
                         // Set the thickness of the stroke based
                         // on how hard the user pressed.
                         double radius = stylusPoints[i].PressureFactor * 10d;
+                        //TODO
+                        
                         drawingContext.DrawEllipse(transparentBrush, pen, pt, radius, radius);
                         prevPoint = pt;
                     }

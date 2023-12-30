@@ -38,6 +38,36 @@ namespace Shaders3
 
         }
 
+        public void ChangeBrushColor(System.Windows.Media.Color color)
+        {
+            //Use the TransparentInkCanvas which has a shader applied when using 
+            if (color == Colors.Transparent)
+            {
+                TransparentInkCanvas.Focusable = true;
+                TransparentInkCanvas.IsHitTestVisible = true;
+                DrawingInkCanvas.Focusable = false;
+                DrawingInkCanvas.IsHitTestVisible = false;
+
+            }
+            else
+            {
+                TransparentInkCanvas.Focusable = false;
+                TransparentInkCanvas.IsHitTestVisible = false;
+                DrawingInkCanvas.Focusable = true;
+                DrawingInkCanvas.IsHitTestVisible = true;
+
+                DrawingInkCanvas.DefaultDrawingAttributes.Color = color;
+            }
+        }
+
+        public void ChangeBrushSize(int size)
+        {
+            DrawingInkCanvas.DefaultDrawingAttributes.Width = size;
+            DrawingInkCanvas.DefaultDrawingAttributes.Height = size;
+            TransparentInkCanvas.DefaultDrawingAttributes.Width = size;
+            TransparentInkCanvas.DefaultDrawingAttributes.Height = size;
+        }
+
         void SaveToBmp(FrameworkElement visual, string fileName)
         {
             var encoder = new BmpBitmapEncoder();

@@ -22,13 +22,13 @@ namespace Shaders3
     /// </summary>
     public partial class InkPresenterSettingsPanel : UserControl
     {
-        public TransparencyInkCanvas _Canvas;
+        public ViewPanel _ViewPanel;
         public ObservableCollection<ColorButtonModel> _ColorButtons;
-        public InkPresenterSettingsPanel(TransparencyInkCanvas canvas)
+        public InkPresenterSettingsPanel(ViewPanel view)
         {
             _ColorButtons = new ObservableCollection<ColorButtonModel>();
             InitializeComponent();
-            _Canvas = canvas;
+            _ViewPanel = view;
             _ColorButtons.Add(new ColorButtonModel(Brushes.Green, Colors.Green));
             _ColorButtons.Add(new ColorButtonModel(Brushes.Blue, Colors.Blue));
             _ColorButtons.Add(new ColorButtonModel(Brushes.Gray, Colors.Gray));
@@ -44,17 +44,15 @@ namespace Shaders3
             if (colormodel != null)
             {
                 //_Canvas.DefaultDrawingAttributes.Color = colormodel.ButtonColor;
-                _Canvas.ChangeBrushColor(colormodel.ButtonColor);
+                //_ViewPanel.TransparentInkCanvas.ChangeBrushColor(colormodel.ButtonColor);
+                _ViewPanel.ChangeBrushColor(colormodel.ButtonColor);
             }
         }
 
         private void SizeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (_Canvas != null)
-            {
-                _Canvas.DefaultDrawingAttributes.Width = e.NewValue;
-                _Canvas.DefaultDrawingAttributes.Height = e.NewValue;
-            }
+            if(_ViewPanel != null)
+                _ViewPanel.ChangeBrushSize((int)e.NewValue);
         }
 
         public class ColorButtonModel
@@ -74,5 +72,7 @@ namespace Shaders3
 
             public string ColorString { get { return ButtonColorBrush.ToString(); } }
         }
+
+        
     }
 }

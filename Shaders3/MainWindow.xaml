@@ -12,6 +12,10 @@
             <RowDefinition Height="150"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
         <Grid x:Name="ToobarGrid" Grid.Row="0">
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -40,5 +44,6 @@
             </Grid>
         </Grid>
         <local:ViewPanel x:Name="MainViewPanel" Grid.Row="1"/>
+        <local:LayersPanel x:Name="GridLayersPanel" Grid.Column="1" Grid.Row="1" />
     </Grid>
 </Window>

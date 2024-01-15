@@ -21,7 +21,5 @@ float4 main(float2 uv:TEXCOORD) : COLOR
     else
     {
         return color2;
-
     }
-        
 }

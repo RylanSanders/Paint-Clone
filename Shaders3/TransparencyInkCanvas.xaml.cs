@@ -26,7 +26,7 @@ namespace Shaders3
     /// </summary>
     public partial class TransparencyInkCanvas : InkCanvas
     {
-
+        public OpaqueInkCanvas opaqueInk;
 
         public TransparencyInkCanvas() : base()
         {
@@ -34,6 +34,14 @@ namespace Shaders3
             // custom InkCanvas.
             //this.DynamicRenderer = customRenderer;
             this.Effect = new CheckerboardShader();
+            this.opaqueInk = opaqueInk;
+        }
+
+        protected override void OnStrokeCollected(InkCanvasStrokeCollectedEventArgs e)
+        {
+            //TODO Here this should submit a stroke to the associated InkCanvas for normal rendering. The stroke added to the other ink canvas should be transparent but otherwise match
+            base.OnStrokeCollected(e);
+            opaqueInk.Strokes.Add(e.Stroke);
         }
 
     }

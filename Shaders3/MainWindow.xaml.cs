@@ -24,6 +24,7 @@ namespace Shaders3
             InitializeComponent();
             InkPresenterSettingsPanel settings = new InkPresenterSettingsPanel(MainViewPanel);
             InkPresenterSettingsContainer.Children.Add(settings);
+            GridLayersPanel.InitializePanel(MainViewPanel);
         }
     }
 }

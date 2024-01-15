@@ -10,6 +10,12 @@
     <Compile Update="InkPresenterSettingsPanel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="LayersPanel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="OpaqueInkCanvas.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="TransparencyInkCanvas.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -21,7 +27,13 @@
     <Page Update="InkPresenterSettingsPanel.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="LayersPanel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="OpaqueInkCanvas.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="TransparencyInkCanvas.xaml">

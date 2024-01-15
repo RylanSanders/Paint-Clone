@@ -7,12 +7,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ScrollViewer>
+        <ScrollViewer x:Name="CanvasScrollViewer">
             <Canvas x:Name="ParentCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <Image x:Name="BackgroundImage" >
+                <!--<Image x:Name="BackgroundImage" >
                 </Image>
-                <InkCanvas x:Name="DrawingInkCanvas" Background="Transparent" Width="{Binding ElementName=BackgroundImage, Path=ActualWidth}" Height="{Binding ElementName=BackgroundImage, Path=ActualHeight}" />
-                <local:TransparencyInkCanvas x:Name="TransparentInkCanvas" Background="Transparent" Width="{Binding ElementName=BackgroundImage, Path=ActualWidth}" Height="{Binding ElementName=BackgroundImage, Path=ActualHeight}" Focusable="False" IsHitTestVisible="False" />
+                <local:OpaqueInkCanvas x:Name="DrawingInkCanvas" Background="Transparent" Width="{Binding ElementName=BackgroundImage, Path=ActualWidth}" Height="{Binding ElementName=BackgroundImage, Path=ActualHeight}" />
+                <local:TransparencyInkCanvas x:Name="TransparentInkCanvas" Background="Transparent" Width="{Binding ElementName=BackgroundImage, Path=ActualWidth}" Height="{Binding ElementName=BackgroundImage, Path=ActualHeight}" Focusable="False" IsHitTestVisible="False" />-->
             </Canvas>
         </ScrollViewer>
     </Grid>

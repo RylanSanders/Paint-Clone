@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectDesigner.ShaderEffects;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -28,14 +29,71 @@ namespace Shaders3
         public int PicWidth = 750;
         public string ImagePath = "C:\\test\\picture.jpg";
 
+        public List<FrameworkElement> Layers { get; set; }
+        public FrameworkElement ActiveLayer { get; set; }
+
+        //Two things I need to know
+        //How can I write transparency to images for the transparent layer
+        //How can I make shaders based on the layers
+
+        //Layer
+
         public ViewPanel()
         {
             System.Drawing.Image image = Bitmap.FromFile(ImagePath);
             PicHeight = image.Height; PicWidth = image.Width;
             InitializeComponent();
-            BackgroundImage.Source = new BitmapImage(new Uri(ImagePath));
+            Layers = new List<FrameworkElement>();
+            
+            InkCanvas transparentInkCanvas = new InkCanvas();
+            transparentInkCanvas.Name = "Transparent";
+            transparentInkCanvas.Effect = new CheckerboardShader();
+            transparentInkCanvas.Background = System.Windows.Media.Brushes.Transparent;
+            transparentInkCanvas.HorizontalAlignment = HorizontalAlignment.Stretch;
+            transparentInkCanvas.VerticalAlignment = VerticalAlignment.Stretch;
+
+            System.Windows.Controls.Image imgSrc = new System.Windows.Controls.Image();
+            imgSrc.Source = new BitmapImage(new Uri(ImagePath));
+            imgSrc.Name = "Image";
+            imgSrc.HorizontalAlignment = HorizontalAlignment.Stretch;
+            imgSrc.VerticalAlignment = VerticalAlignment.Stretch;
+
+            InkCanvas opaqueCanvas = new InkCanvas();
+            opaqueCanvas.Name = "Ink";
+            opaqueCanvas.Background = System.Windows.Media.Brushes.Transparent;
+            opaqueCanvas.HorizontalAlignment = HorizontalAlignment.Stretch;
+            opaqueCanvas.VerticalAlignment = VerticalAlignment.Stretch;
+
+
+            Layers.Add(imgSrc);
+            Layers.Add(transparentInkCanvas);
+            Layers.Add(opaqueCanvas);
+            Layers.ForEach(layer => ParentCanvas.Children.Add(layer));
+            //TransparentInkCanvas.opaqueInk = DrawingInkCanvas;
             KeyDown += Save;
 
+            ParentCanvas.SizeChanged += ResizeLayers;
+            ActiveLayer = opaqueCanvas;
+        }
+
+        public void ReorderLayers()
+        {
+            ParentCanvas.Children.Clear();
+            Layers.ForEach(layer => ParentCanvas.Children.Add(layer));
+        }
+
+        public void ChangeActiveLayer(FrameworkElement layer)
+        {
+            ActiveLayer.Focusable = false;
+            ActiveLayer.IsHitTestVisible = false;
+            ActiveLayer = layer;
+            ActiveLayer.Focusable = true;
+            ActiveLayer.IsHitTestVisible = true;
+        }
+
+        private void ResizeLayers(object sender, EventArgs args) {
+            //Layers.ForEach(l => { l.Height = ParentCanvas.Height; l.Width = ParentCanvas.Width; });
+            Layers.ForEach(l => l.InvalidateVisual());
         }
 
         public void ChangeBrushColor(System.Windows.Media.Color color)
@@ -43,29 +101,28 @@ namespace Shaders3
             //Use the TransparentInkCanvas which has a shader applied when using 
             if (color == Colors.Transparent)
             {
-                TransparentInkCanvas.Focusable = true;
-                TransparentInkCanvas.IsHitTestVisible = true;
-                DrawingInkCanvas.Focusable = false;
-                DrawingInkCanvas.IsHitTestVisible = false;
-
+                //TransparentInkCanvas.Focusable = true;
+                //TransparentInkCanvas.IsHitTestVisible = true;
+                //DrawingInkCanvas.Focusable = false;
+                //DrawingInkCanvas.IsHitTestVisible = false;
             }
             else
             {
-                TransparentInkCanvas.Focusable = false;
-                TransparentInkCanvas.IsHitTestVisible = false;
-                DrawingInkCanvas.Focusable = true;
-                DrawingInkCanvas.IsHitTestVisible = true;
+                //TransparentInkCanvas.Focusable = false;
+                //TransparentInkCanvas.IsHitTestVisible = false;
+                //DrawingInkCanvas.Focusable = true;
+                //DrawingInkCanvas.IsHitTestVisible = true;
 
-                DrawingInkCanvas.DefaultDrawingAttributes.Color = color;
+                //DrawingInkCanvas.DefaultDrawingAttributes.Color = color;
             }
         }
 
         public void ChangeBrushSize(int size)
         {
-            DrawingInkCanvas.DefaultDrawingAttributes.Width = size;
-            DrawingInkCanvas.DefaultDrawingAttributes.Height = size;
-            TransparentInkCanvas.DefaultDrawingAttributes.Width = size;
-            TransparentInkCanvas.DefaultDrawingAttributes.Height = size;
+            //DrawingInkCanvas.DefaultDrawingAttributes.Width = size;
+            //DrawingInkCanvas.DefaultDrawingAttributes.Height = size;
+            //TransparentInkCanvas.DefaultDrawingAttributes.Width = size;
+            //TransparentInkCanvas.DefaultDrawingAttributes.Height = size;
         }
 
         void SaveToBmp(FrameworkElement visual, string fileName)
@@ -91,7 +148,7 @@ namespace Shaders3
             // Maybe this ? very slow though https://stackoverflow.com/questions/26082681/write-transparency-to-bitmap-using-unsafe-with-the-original-colors-preserved
             //Would also need to figure out how to apply shaders to all the image or only parts of it
             bitmap.Render(visual);
-            bitmap.Render(DrawingInkCanvas);
+            //bitmap.Render(DrawingInkCanvas);
             BitmapFrame frame = BitmapFrame.Create(bitmap);
             encoder.Frames.Add(frame);
 
@@ -103,14 +160,7 @@ namespace Shaders3
 
         private void Save(object sender, EventArgs args)
         {
-            SaveToPng(BackgroundImage, "C:/test/jk.png");
-            //Bitmap img = new Bitmap((int)BackgroundImage.Source.Width, (int)BackgroundImage.Source.Height, ImagePixelFormat);
-            //Graphics graphics = Graphics.FromImage(img);
-            //var backgroundImag = (BitmapSource)BackgroundImage.Source;
-            //var newImg = BitmapSourceToBitmap2(backgroundImag);
-            //graphics.DrawImage(newImg, new System.Drawing.Point(0, 0));
-            //graphics.Dispose();
-            //img.Save(@"C:/test/newImage.png");
+            //SaveToPng(BackgroundImage, "C:/test/jk.png");
         }
 
         //From https://stackoverflow.com/questions/5689674/c-sharp-convert-wpf-image-source-to-a-system-drawing-bitmap
